@@ -20,7 +20,7 @@ function App() {
   }, []);
 
   return (
-    <Box fontFamily={"Helvetica"} minH="100vh">
+    <Box fontFamily={"Helvetica"} minH="99vh">
       <Heading as="h1" fontSize={"5xl"} textAlign="center">
         Mondo Clean
       </Heading>
