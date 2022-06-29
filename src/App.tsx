@@ -1,25 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Box, Flex, Heading, Spinner } from "@chakra-ui/react";
+import axios from "axios";
+import Card from "components/Card";
+import { useEffect, useState } from "react";
+
+interface section {
+  id: number;
+}
 
 function App() {
+  const [sections, setSections] = useState<section[]>();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(`https://baggiogiacomosimulazioneapi.azurewebsites.net/api/Section`)
+      .then((res) => res.json())
+      .then((res) => setSections(res));
+
+    setIsLoading(false);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box fontFamily={"Helvetica"} minH="100vh">
+      <Heading as="h1" fontSize={"5xl"} textAlign="center">
+        Mondo Clean
+      </Heading>
+      {!isLoading ? (
+        <Flex w={"80%"} flexWrap={"wrap"} mx={"auto"} my={"20"}>
+          {sections?.map((section) => (
+            <Card key={section.id} number={section.id} />
+          ))}
+        </Flex>
+      ) : (
+        <Flex justifyContent={"center"} alignItems={"center"}>
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+            my={"40"}
+          />
+        </Flex>
+      )}
+    </Box>
   );
 }
 
