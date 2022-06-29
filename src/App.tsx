@@ -1,5 +1,4 @@
 import { Box, Flex, Heading, Spinner } from "@chakra-ui/react";
-import axios from "axios";
 import Card from "components/Card";
 import { useEffect, useState } from "react";
 
